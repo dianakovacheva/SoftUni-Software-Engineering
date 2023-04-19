@@ -4,7 +4,7 @@
   "description": "Course exercises and exams | Diana Marinova",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon /Users/diana/Learning/Web_Dev/06_SoftUni-Software-Engineering/GitHub/SoftUni-Software-Engineering/06-JS-Back-End/04-Workshop-ExpressJS-and-Templating/src/index.js"
+    "start": "nodemon ./src/index.js"
   },
   "keywords": [],
   "author": "",
