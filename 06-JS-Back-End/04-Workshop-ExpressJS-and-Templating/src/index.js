@@ -3,7 +3,8 @@ const app = express();
 const port = 5050;
 
 app.get('/', (req, res) => {
-    res.send('Hello world');
+    res.send('Hello World');
 });
 
-app.listen(port, `App is listening on port ${port}`);
+
+app.listen(port, () => console.log(`App is listening on port ${port}`));
