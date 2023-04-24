@@ -5,6 +5,7 @@ const port = 5050;
 const routes = require('./routes.js');
 
 app.use('/static', express.static('public'));
+app.use(express.urlencoded({ extended: false }));
 
 app.engine('hbs', handlerbars.engine({
     extname: 'hbs',
