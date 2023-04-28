@@ -24,8 +24,9 @@ router.post('/create', (req, res) => {
         });
 });
 
-router.get('/details/:id', (req, res) => {
-    res.render('details.hbs');
+router.get('/details/:_id', (req, res) => {
+    const cube = cubeService.getOne(req.params._id);
+    res.render('details.hbs', { cube });
 });
 
 module.exports = router;
