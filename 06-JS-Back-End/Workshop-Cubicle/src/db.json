@@ -30,5 +30,11 @@
         "description": "text",
         "imageUrl": "image",
         "difficultyLevel": "6"
+    },
+    {
+        "name": "Test Cube",
+        "description": "Test",
+        "imageUrl": "1",
+        "difficultyLevel": "1"
     }
 ]
