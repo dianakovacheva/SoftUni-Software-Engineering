@@ -4,11 +4,12 @@ const path = require('path');
 const cubes = require('../db.json');
 
 exports.getAll = (search, from, to) => {
-    console.log(search);
+
+
+
     const result = cubes
         .filter(cube => cube.name.toLowerCase().includes(search?.toLowerCase() || ''))
-        .filter(cube => cube.difficultyLevel >= from)
-        .filter(cube => cube.difficultyLevel <= to);
+        .filter(cube => cube.difficultyLevel >= from && cube.difficultyLevel <= to);
 
     return result;
 };

@@ -5,7 +5,7 @@ router.get('/', (req, res) => {
     let { search, from, to } = req.query;
 
     const cubes = cubeService.getAll(search, from, to);
-    res.render('index.hbs', { cubes });
+    res.render('index.hbs', { cubes, search, from, to });
 });
 
 router.get('/about', (req, res) => {
