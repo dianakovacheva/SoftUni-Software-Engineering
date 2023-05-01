@@ -5,7 +5,7 @@ router.get('/create', (req, res) => {
     res.render('create.hbs');
 });
 
-router.post('/create', (req, res) => {
+router.post('/create', async (req, res) => {
     const cube = req.body;
 
     // Validate
@@ -13,20 +13,25 @@ router.post('/create', (req, res) => {
         return res.status(400).send('Invalid request');
     };
 
-    // Save data
-    cubeService.create(cube)
-        .then(() => {
-            // Redirect to home page
-            res.redirect('/');
-        })
-        .catch(err => {
-            res.status(400).send(err);
-        });
+    try {
+        // Save data
+        await cubeService.create(cube);
+
+        // Redirect to home page
+        res.redirect('/');
+    } catch (err) {
+        res.status(400).send(err)
+    }
 });
 
-router.get('/details/:_id', (req, res) => {
-    const cube = cubeService.getOne(req.params._id);
-    res.render('details.hbs', { cube });
+router.get('/details/:id', async (req, res) => {
+    const cube = await cubeService.getOne(req.params.id).lean();
+    try {
+        res.render('details', { cube });
+    }
+    catch (err) {
+        console.error(err)
+        //console.log(err)
+    }
 });
-
 module.exports = router;
