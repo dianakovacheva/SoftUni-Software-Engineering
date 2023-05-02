@@ -30,8 +30,13 @@ router.get('/details/:id', async (req, res) => {
         res.render('details', { cube });
     }
     catch (err) {
-        console.error(err)
-        //console.log(err)
+        console.error(err);
     }
 });
+
+router.get('/attach/accessory/:cubeId', (req, res) => {
+    res.render('accessory/attach');
+});
+
+
 module.exports = router;
