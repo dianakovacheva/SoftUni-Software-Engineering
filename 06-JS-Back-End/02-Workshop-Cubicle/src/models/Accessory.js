@@ -16,7 +16,7 @@ const accessorySchema = new mongoose.Schema({
         type: String,
         required: true,
         maxlength: 120,
-    }
+    },
 });
 
 const Accessory = mongoose.model('Accessory', accessorySchema);
