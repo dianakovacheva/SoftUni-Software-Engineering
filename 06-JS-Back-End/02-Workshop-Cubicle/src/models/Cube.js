@@ -13,6 +13,9 @@ const cubeSchema = new mongoose.Schema({
     imageUrl: {
         type: String,
         required: true,
+        validate: {
+            validator: /^http/g,
+        },
     },
     difficultyLevel: {
         type: Number,
