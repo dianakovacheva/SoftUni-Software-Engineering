@@ -34,8 +34,9 @@ router.get('/details/:id', async (req, res) => {
     }
 });
 
-router.get('/attach/accessory/:cubeId', (req, res) => {
-    res.render('accessory/attach');
+router.get('/attach/accessory/:cubeId', async (req, res) => {
+    const cube = await cubeService.getOne(req.params.cubeId).lean();
+    res.render('accessory/attach', { cube });
 });
 
 
