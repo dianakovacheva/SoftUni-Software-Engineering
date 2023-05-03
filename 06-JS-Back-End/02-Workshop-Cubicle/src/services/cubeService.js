@@ -2,12 +2,12 @@ const Accessory = require('../models/Accessory.js');
 const Cube = require('../models/Cube.js');
 
 exports.getAll = async (search = '', fromInput, toInput) => {
+    const from = Number(fromInput) || 0;
+    const to = Number(toInput) || 6;
 
-    let cubes = await Cube.find().lean();
-
-
-    // const from = Number(fromInput) || 0;
-    // const to = Number(toInput) || 6;
+    let cubes = await Cube.find({ name: { $regex: new RegExp(search, 'i') } })
+        .where('difficultyLevel').gte(from).lte(to)
+        .lean();
 
     // const result = cubes
     //     .filter(cube => cube.name.toLowerCase().includes(search?.toLowerCase() || ''))
