@@ -18,7 +18,7 @@ exports.getAll = async (search = '', fromInput, toInput) => {
 
 exports.create = (cube) => Cube.create(cube);
 
-exports.getOne = (cubeId) => Cube.findById(cubeId);
+exports.getOne = (cubeId) => Cube.findById(cubeId).populate('accessories');
 
 exports.attachAccessory = async (cubeId, accessoryId) => {
     const cube = await Cube.findById(cubeId);

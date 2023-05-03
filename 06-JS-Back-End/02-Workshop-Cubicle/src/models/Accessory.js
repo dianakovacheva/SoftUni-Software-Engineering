@@ -9,7 +9,7 @@ const accessorySchema = new mongoose.Schema({
         type: String,
         required: true,
         validate: {
-            validator: /^https/g,
+            validator: /(((ftp|http|https):\/\/)|(\/)|(..\/))(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/g,
         },
     },
     description: {
