@@ -10,4 +10,5 @@ router.use('/cube', cubeController);
 router.use('/accessory', accessoryController);
 router.use('/auth', authController);
 
+
 module.exports = router;
