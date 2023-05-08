@@ -22,6 +22,8 @@ exports.getOne = (cubeId) => Cube.findById(cubeId);
 
 exports.getOneDetails = (cubeId) => Cube.findById(cubeId).populate('accessories');
 
+exports.edit = (cubeId, cubeData) => Cube.findByIdAndUpdate(cubeId, cubeData);
+
 exports.attachAccessory = async (cubeId, accessoryId) => {
     const cube = await Cube.findById(cubeId);
     const accessory = await Accessory.findById(accessoryId);
@@ -34,3 +36,5 @@ exports.attachAccessory = async (cubeId, accessoryId) => {
 
     return cube;
 };
+
+

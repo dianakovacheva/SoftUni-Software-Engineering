@@ -9,6 +9,7 @@ router.use('/', homeController);
 router.use('/cube', cubeController);
 router.use('/accessory', accessoryController);
 router.use('/auth', authController);
+router.use('edit', cubeController);
 router.use('*', (req, res) => {
     res.render('404');
 });
