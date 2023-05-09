@@ -68,4 +68,16 @@ router.post('/edit/:cubeId', async (req, res) => {
     res.redirect(`/cube/details/${modifiedCube._id}`);
 });
 
+router.get('/delete/:cubeId', async (req, res) => {
+    const cube = await cubeService.getOne(req.params.cubeId).lean();
+
+    // TODO: Add is owner validation
+    res.render('cube/delete', { cube });
+});
+
+router.post('/delete/:cubeId', async (req, res) => {
+    await cubeService.delete(re.params.cubeId);
+    res.redirect('/');
+});
+
 module.exports = router;
