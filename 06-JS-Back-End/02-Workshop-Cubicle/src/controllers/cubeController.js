@@ -49,9 +49,13 @@ router.post('/attach/accessory/:cubeId', isAuth, async (req, res) => {
     res.redirect(`/cube/details/${req.params.cubeId}`);
 });
 
-router.get('/edit/:cubeId', async (req, res) => {
+router.get('/edit/:cubeId', isAuth, async (req, res) => {
 
     const cube = await cubeService.getOne(req.params.cubeId).lean();
+
+    if (cube.owner != req.user._id) {
+        return res.redirect('/404');
+    };
 
     if (!cube) {
         return res.redirect('/404');
