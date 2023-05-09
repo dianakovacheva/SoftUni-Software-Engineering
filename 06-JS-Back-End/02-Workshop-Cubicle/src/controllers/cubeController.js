@@ -76,7 +76,7 @@ router.get('/delete/:cubeId', async (req, res) => {
 });
 
 router.post('/delete/:cubeId', async (req, res) => {
-    await cubeService.delete(re.params.cubeId);
+    await cubeService.delete(req.params.cubeId);
     res.redirect('/');
 });
 
