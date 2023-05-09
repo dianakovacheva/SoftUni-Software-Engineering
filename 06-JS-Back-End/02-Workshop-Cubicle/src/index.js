@@ -1,6 +1,7 @@
 const express = require('express');
 const { initializeDatabase } = require('./config/database.js');
 const cookieParser = require('cookie-parser');
+const { auth } = require('./middlewares/authMiddleware.js');
 
 const app = express();
 const routes = require('./routes.js');
@@ -12,6 +13,7 @@ require('./config/handlebars.js')(app);
 app.use('/static', express.static('public'));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
+app.use(auth);
 app.use(routes);
 
 initializeDatabase()
