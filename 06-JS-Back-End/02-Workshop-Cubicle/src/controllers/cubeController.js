@@ -29,12 +29,10 @@ router.post('/create', isAuth, async (req, res) => {
 
 router.get('/details/:id', async (req, res) => {
     const cube = await cubeService.getOneDetails(req.params.id).lean();
-    try {
-        res.render('details', { cube });
-    }
-    catch (err) {
-        console.error(err);
-    };
+    const isOwner = cube.owner == req.user?._id;
+
+    res.render('details', { cube, isOwner });
+
 });
 
 router.get('/attach/accessory/:cubeId', isAuth, async (req, res) => {
