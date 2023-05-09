@@ -49,9 +49,6 @@ router.post('/attach/accessory/:cubeId', async (req, res) => {
 
 router.get('/edit/:cubeId', async (req, res) => {
 
-    console.log(req.user);
-
-
     const cube = await cubeService.getOne(req.params.cubeId).lean();
 
     if (!cube) {
