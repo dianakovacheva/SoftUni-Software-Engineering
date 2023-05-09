@@ -9,6 +9,7 @@ router.get('/create', isAuth, (req, res) => {
 
 router.post('/create', isAuth, async (req, res) => {
     const cube = req.body;
+    cube.owner = req.user._id;
 
     // Validate
     if (cube.name.length < 2) {
