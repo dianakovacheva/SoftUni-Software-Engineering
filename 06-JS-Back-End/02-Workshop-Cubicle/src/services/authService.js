@@ -5,7 +5,7 @@ const User = require('../models/User.js');
 const { saltRounds, secret } = require('../constants.js');
 
 
-exports.register = async ({ username, password, repeatPassword }) => {
+exports.register = async ({ emailAddress, password, repeatPassword }) => {
     // TODO: Return form validation message
     if (repeatPassword !== password) {
         return false;
@@ -14,15 +14,15 @@ exports.register = async ({ username, password, repeatPassword }) => {
     let hashedPassword = await bcrypt.hash(password, saltRounds);
 
     let createdUser = User.create({
-        username,
+        emailAddress,
         password: hashedPassword,
     });
 
     return createdUser;
 };
 
-exports.login = async ({ username, password }) => {
-    let user = await User.findOne({ username });
+exports.login = async ({ emailAddress, password }) => {
+    let user = await User.findOne({ emailAddress });
 
     if (!user) {
         // TODO: Add message
@@ -36,7 +36,7 @@ exports.login = async ({ username, password }) => {
     };
 
     let result = new Promise((resolve, reject) => {
-        jwt.sign({ _id: user._id, username: user.username }, secret, { expiresIn: '2d' }, (err, token) => {
+        jwt.sign({ _id: user._id, emailAddress: user.emailAddress }, secret, { expiresIn: '2d' }, (err, token) => {
 
             if (err) {
                 return reject(err);

@@ -8,7 +8,7 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-    if (!validator.isEmail(req.body.username)) {
+    if (!validator.isEmail(req.body.emailAddress)) {
         return res.status(404).send('Invalid email');
     };
 
