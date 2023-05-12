@@ -7,18 +7,19 @@ router.get('/register', (req, res) => {
     res.render('auth/register');
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register', async (req, res, next) => {
     if (!validator.isEmail(req.body.emailAddress)) {
-        return res.status(404).send('Invalid email');
+        // return res.status(404).send('Invalid email');
+        let error = { message: 'Invalid email' };
+        next(error);
     };
 
-    let createdUser = await authService.register(req.body);
-
-    if (createdUser) {
+    try {
+        let createdUser = await authService.register(req.body);
         res.redirect('/auth/login');
-    } else {
-        // TODO: Add notification
-        res.redirect('404');
+    } catch (error) {
+        console.log(error.message);
+        res.status(401).render('auth/register', { error: error.message });
     };
 });
 
@@ -38,7 +39,7 @@ router.post('/login', async (req, res) => {
 
         res.redirect('/');
     } catch (error) {
-        res.render('auth/login', { error: error.message });
+        res.status(400).render('auth/login', { error: error.message });
     };
 });
 
