@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User.js');
 const { saltRounds, secret } = require('../constants.js');
 
-
 exports.register = async ({ emailAddress, password, repeatPassword }) => {
     // TODO: Return form validation message
     if (repeatPassword !== password) {
@@ -46,7 +45,6 @@ exports.login = async ({ emailAddress, password }) => {
 
             resolve(token);
         });
-
     });
 
     return result;
