@@ -26,7 +26,16 @@ async function deleteById(id) {
   await Hotel.findOneAndRemove(id);
 }
 
-async function bookRoom(hotelId, userID) {}
+async function bookRoom(hotelId, userId) {
+  const existingHotel = await Hotel.findById(hotelId);
+
+  if (existingHotel.bookings.includes(userId)) {
+    throw new Error("Cannot book twice");
+  }
+
+  existingHotel.bookings.push(userId);
+  await existingHotel.save();
+}
 
 module.exports = {
   getAll,
