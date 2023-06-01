@@ -1,6 +1,8 @@
 const Hotel = require("../models/Hotel");
 
-async function getAll() {}
+async function getAll() {
+  return Hotel.find({}).lean();
+}
 
 async function getById(id) {}
 
