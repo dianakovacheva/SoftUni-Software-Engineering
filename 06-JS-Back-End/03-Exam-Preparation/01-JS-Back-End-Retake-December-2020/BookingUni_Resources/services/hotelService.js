@@ -22,7 +22,9 @@ async function update(id, hotel) {
   await existingHotel.save();
 }
 
-async function deleteById(id) {}
+async function deleteById(id) {
+  await Hotel.findOneAndRemove(id);
+}
 
 async function bookRoom(hotelId, userID) {}
 
