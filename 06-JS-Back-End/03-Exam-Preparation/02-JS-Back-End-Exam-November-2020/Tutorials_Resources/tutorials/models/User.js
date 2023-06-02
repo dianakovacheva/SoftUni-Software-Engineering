@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose");
 
-// TODO add User properties and validation according to assigment
 const userSchema = new Schema({
   username: {
     type: String,
