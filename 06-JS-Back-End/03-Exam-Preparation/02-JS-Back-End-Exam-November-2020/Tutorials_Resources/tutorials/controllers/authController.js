@@ -1,5 +1,6 @@
 const { register, login } = require("../services/userService");
 const { parseError } = require("../util/parser");
+const { body, validationResult } = require("express-validator");
 
 const authController = require("express").Router();
 
@@ -9,35 +10,47 @@ authController.get("/register", (req, res) => {
   });
 });
 
-authController.post("/register", async (req, res) => {
-  try {
-    if (req.body.username == "" || req.body.password == "") {
-      throw new Error("All fields required");
+authController.post(
+  "/register",
+  body("username")
+    .isLength({ min: 5 })
+    .withMessage("Username must be at least 5 characters long")
+    .isAlphanumeric()
+    .withMessage("Username may contain only letters and numbers"),
+  body("password")
+    .isLength({ min: 5 })
+    .withMessage("Password must be at least 5 characters long")
+    .isAlphanumeric()
+    .withMessage("Password may contain only letters and numbers"),
+  async (req, res) => {
+    try {
+      const { errors } = validationResult(req);
+      if (errors.length > 0) {
+        throw errors;
+      }
+      if (req.body.password != req.body.repass) {
+        throw new Error("Passwords don't match");
+      }
+
+      const token = await register(req.body.username, req.body.password);
+
+      res.cookie("token", token);
+
+      res.redirect("/");
+    } catch (error) {
+      const errors = parseError(error);
+      res.render("register", {
+        title: "Register Page",
+        errors,
+        body: {
+          username: req.body.username,
+        },
+      });
     }
-
-    if (req.body.password != req.body.repass) {
-      throw new Error("Passwords don't match");
-    }
-
-    const token = await register(req.body.username, req.body.password);
-
-    res.cookie("token", token);
-
-    res.redirect("/");
-  } catch (error) {
-    const errors = parseError(error);
-    res.render("register", {
-      title: "Register Page",
-      errors,
-      body: {
-        username: req.body.username,
-      },
-    });
   }
-});
+);
 
 authController.get("/login", (req, res) => {
-  // TODO replace with actual view by assigment
   res.render("login", {
     title: "Login Page",
   });
@@ -48,11 +61,10 @@ authController.post("/login", async (req, res) => {
     const token = await login(req.body.username, req.body.password);
     res.cookie("token", token);
 
-    // TODO replace with redirect by assignment
     res.redirect("/");
   } catch (error) {
     const errors = parseError(error);
-    // TODO add error desplay to actual template from assigment
+
     res.render("login", {
       title: "Login Page",
       errors,
