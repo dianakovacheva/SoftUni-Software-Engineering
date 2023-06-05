@@ -36,6 +36,7 @@ const courseSchema = new Schema({
     ref: "User",
     default: [],
   },
+  userCount: { type: Number, default: 0 },
   owner: { type: Types.ObjectId, ref: "User" },
 });
 
