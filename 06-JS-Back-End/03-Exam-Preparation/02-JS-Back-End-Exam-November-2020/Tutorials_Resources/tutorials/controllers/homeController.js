@@ -8,7 +8,7 @@ homeController.get("/", async (req, res) => {
 
   if (req.user) {
     view = "user-home";
-    courses = await getAllByDate();
+    courses = await getAllByDate(req.query.search);
   } else {
     view = "guest-home";
     courses = await getRecent();
@@ -17,6 +17,7 @@ homeController.get("/", async (req, res) => {
   res.render(view, {
     title: "Home Page",
     courses,
+    search: req.query.search,
   });
 });
 
