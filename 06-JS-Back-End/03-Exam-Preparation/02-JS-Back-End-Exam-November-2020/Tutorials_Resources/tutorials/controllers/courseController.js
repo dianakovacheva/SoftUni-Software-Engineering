@@ -1,4 +1,8 @@
-const { createCourse, getById } = require("../services/courseService");
+const {
+  createCourse,
+  getById,
+  deleteById,
+} = require("../services/courseService");
 const { parseError } = require("../util/parser");
 
 const courserController = require("express").Router();
@@ -17,6 +21,17 @@ courserController.get("/:id", async (req, res) => {
     title: course.title,
     course,
   });
+});
+
+courserController.get("/:id/delete", async (req, res) => {
+  const course = await getById(req.params.id);
+
+  if (course.owner.toString() != req.user._id.toString()) {
+    return res.redirect("/auth/login");
+  }
+
+  await deleteById(req.params.id);
+  res.redirect("/");
 });
 
 courserController.post("/create", async (req, res) => {
@@ -38,6 +53,15 @@ courserController.post("/create", async (req, res) => {
       body: course,
     });
   }
+});
+
+courserController.get("/:id/edit", async (req, res) => {
+  const course = await getById(req.params.id);
+
+  res.render("edit", {
+    title: "Edit Course",
+    course,
+  });
 });
 
 module.exports = courserController;
