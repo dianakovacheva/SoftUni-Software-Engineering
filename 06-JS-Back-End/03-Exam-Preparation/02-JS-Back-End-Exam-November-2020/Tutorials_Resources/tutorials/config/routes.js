@@ -5,6 +5,6 @@ const { hasUser, isGuest } = require("../middlewares/guards");
 
 module.exports = (app) => {
   app.use("/", homeController);
-  app.use("/auth", isGuest(), authController);
+  app.use("/auth", authController);
   app.use("/course", hasUser(), courserController);
 };
