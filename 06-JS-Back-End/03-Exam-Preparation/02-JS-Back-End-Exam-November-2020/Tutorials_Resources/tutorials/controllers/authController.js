@@ -1,10 +1,11 @@
+const { isGuest } = require("../middlewares/guards");
 const { register, login } = require("../services/userService");
 const { parseError } = require("../util/parser");
 const { body, validationResult } = require("express-validator");
 
 const authController = require("express").Router();
 
-authController.get("/register", (req, res) => {
+authController.get("/register", isGuest(), (req, res) => {
   res.render("register", {
     title: "Register Page",
   });
@@ -12,6 +13,7 @@ authController.get("/register", (req, res) => {
 
 authController.post(
   "/register",
+  isGuest(),
   body("username")
     .isLength({ min: 5 })
     .withMessage("Username must be at least 5 characters long")
@@ -50,13 +52,13 @@ authController.post(
   }
 );
 
-authController.get("/login", (req, res) => {
+authController.get("/login", isGuest(), (req, res) => {
   res.render("login", {
     title: "Login Page",
   });
 });
 
-authController.post("/login", async (req, res) => {
+authController.post("/login", isGuest(), async (req, res) => {
   try {
     const token = await login(req.body.username, req.body.password);
     res.cookie("token", token);
