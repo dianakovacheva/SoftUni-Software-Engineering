@@ -2,6 +2,7 @@ const {
   createCourse,
   getById,
   deleteById,
+  updateById,
 } = require("../services/courseService");
 const { parseError } = require("../util/parser");
 
@@ -62,6 +63,25 @@ courserController.get("/:id/edit", async (req, res) => {
     title: "Edit Course",
     course,
   });
+});
+
+courserController.post("/:id/edit", async (req, res) => {
+  const course = await getById(req.params.id);
+
+  if (course.owner.toString() != req.user._id.toString()) {
+    return res.redirect("/auth/login");
+  }
+
+  try {
+    await updateById(req.params.id, req.body);
+    res.redirect(`/course/${req.params.id}`);
+  } catch (error) {
+    res.render("edit", {
+      title: "Edit Course",
+      errors: parseError(error),
+      course: req.body,
+    });
+  }
 });
 
 module.exports = courserController;
