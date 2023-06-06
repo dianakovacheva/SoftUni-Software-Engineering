@@ -12,8 +12,13 @@ async function createCourse(course) {
   return Course.create(course);
 }
 
+async function getById(id) {
+  return Course.findById(id).lean();
+}
+
 module.exports = {
   getAllByDate,
   createCourse,
   getRecent,
+  getById,
 };
