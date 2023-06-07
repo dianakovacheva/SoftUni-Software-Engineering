@@ -26,6 +26,11 @@ const gameSchema = new Schema({
     required: true,
     enum: ["PC", "Nintendo", "PS4", "PS5", "XBOX"],
   },
+  boughtBy: {
+    type: [Types.ObjectId],
+    ref: "User",
+    default: [],
+  },
   owner: { type: Types.ObjectId, ref: "User" },
 });
 
