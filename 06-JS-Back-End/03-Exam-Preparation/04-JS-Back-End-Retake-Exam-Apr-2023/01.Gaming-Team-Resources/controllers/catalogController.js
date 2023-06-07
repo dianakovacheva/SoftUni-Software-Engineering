@@ -12,6 +12,7 @@ catalogController.get("/", async (req, res) => {
 
 catalogController.get("/details/:id", async (req, res) => {
   const game = await getById(req.params.id);
+  game.isOwner = game.owner.toString() == req.user?._id.toString();
 
   res.render("details", {
     title: "Details Page",
