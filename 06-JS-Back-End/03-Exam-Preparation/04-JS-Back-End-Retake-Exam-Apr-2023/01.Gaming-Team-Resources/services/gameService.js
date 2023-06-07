@@ -12,8 +12,16 @@ async function getById(id) {
   return Game.findById(id).lean();
 }
 
+async function boughtByUser(gameId, userId) {
+  const game = await Game.findById(gameId);
+  game.boughtBy.push(userId);
+
+  return game.save();
+}
+
 module.exports = {
   getAll,
   createGameOffer,
   getById,
+  boughtByUser,
 };
