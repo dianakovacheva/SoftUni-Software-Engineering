@@ -46,7 +46,6 @@ authController.post("/register", async (req, res) => {
 });
 
 authController.get("/login", (req, res) => {
-  // TODO replace with actual view by assigment
   res.render("login", {
     title: "Login Page",
   });
@@ -54,10 +53,9 @@ authController.get("/login", (req, res) => {
 
 authController.post("/login", async (req, res) => {
   try {
-    const token = await login(req.body.username, req.body.password);
+    const token = await login(req.body.email, req.body.password);
     res.cookie("token", token);
 
-    // TODO replace with redirect by assignment
     res.redirect("/");
   } catch (error) {
     const errors = parseError(error);
@@ -66,7 +64,7 @@ authController.post("/login", async (req, res) => {
       title: "Login Page",
       errors,
       body: {
-        username: req.body.username,
+        email: req.body.email,
       },
     });
   }
