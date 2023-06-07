@@ -1,5 +1,5 @@
 const catalogController = require("express").Router();
-const { getAll } = require("../services/gameService");
+const { getAll, getById } = require("../services/gameService");
 
 catalogController.get("/", async (req, res) => {
   const games = await getAll();
@@ -7,6 +7,16 @@ catalogController.get("/", async (req, res) => {
     title: "Catalog Page - Gaming Team",
     user: req.user,
     games: games,
+  });
+});
+
+catalogController.get("/details/:id", async (req, res) => {
+  const game = await getById(req.params.id);
+
+  res.render("details", {
+    title: "Details Page",
+    user: req.user,
+    game,
   });
 });
 
