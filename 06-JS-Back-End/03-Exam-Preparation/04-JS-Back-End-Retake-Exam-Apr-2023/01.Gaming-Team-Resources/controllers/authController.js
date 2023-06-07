@@ -4,7 +4,6 @@ const { parseError } = require("../util/parser");
 const authController = require("express").Router();
 
 authController.get("/register", (req, res) => {
-  // TODO replace with actual view by assigment
   res.render("register", {
     title: "Register Page",
   });
