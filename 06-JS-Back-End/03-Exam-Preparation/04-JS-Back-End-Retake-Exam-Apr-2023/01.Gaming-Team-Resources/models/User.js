@@ -16,6 +16,7 @@ const userSchema = new Schema({
 
 userSchema.index(
   { username: 1 },
+  { email: 1 },
   {
     collation: {
       locale: "en",
