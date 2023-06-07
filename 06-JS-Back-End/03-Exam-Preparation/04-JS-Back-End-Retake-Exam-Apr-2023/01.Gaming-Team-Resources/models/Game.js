@@ -5,7 +5,7 @@ const gameSchema = new Schema({
     type: String,
     required: true,
   },
-  image: {
+  imageUrl: {
     type: String,
     required: true,
   },
@@ -26,14 +26,7 @@ const gameSchema = new Schema({
     required: true,
     enum: ["PC", "Nintendo", "PS4", "PS5", "XBOX"],
   },
-  boughtBy: {
-    default: [],
-    ref: "User",
-  },
-  owner: {
-    type: [Types.ObjectId],
-    ref: "User",
-  },
+  owner: { type: Types.ObjectId, ref: "User" },
 });
 
 gameSchema.index(
