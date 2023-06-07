@@ -59,7 +59,7 @@ authController.post("/login", async (req, res) => {
     res.redirect("/");
   } catch (error) {
     const errors = parseError(error);
-    // TODO add error desplay to actual template from assigment
+
     res.render("login", {
       title: "Login Page",
       errors,
