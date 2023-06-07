@@ -11,7 +11,11 @@ authController.get("/register", (req, res) => {
 
 authController.post("/register", async (req, res) => {
   try {
-    if (req.body.username == "" || req.body.password == "") {
+    if (
+      req.body.username == "" ||
+      req.body.email == "" ||
+      req.body.password == ""
+    ) {
       throw new Error("All fields required");
     }
 
@@ -19,21 +23,23 @@ authController.post("/register", async (req, res) => {
       throw new Error("Passwords don't match");
     }
 
-    const token = await register(req.body.username, req.body.password);
+    const token = await register(
+      req.body.username,
+      req.body.email,
+      req.body.password
+    );
 
-    // TODO check assignment to see if register creates a session
     res.cookie("token", token);
-
-    // TODO replace with redirect by assignment
     res.redirect("/");
   } catch (error) {
     const errors = parseError(error);
-    // TODO add error desplay to actual template from assigment
+
     res.render("register", {
       title: "Register Page",
       errors,
       body: {
         username: req.body.username,
+        email: req.body.email,
       },
     });
   }

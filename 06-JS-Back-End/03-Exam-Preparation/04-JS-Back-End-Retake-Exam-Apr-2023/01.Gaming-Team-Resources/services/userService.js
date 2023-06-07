@@ -4,7 +4,7 @@ const User = require("../models/User");
 
 const JWT_SECRET = "qfsgdfjgjthkhkhjkj";
 
-async function register(username, password) {
+async function register(username, email, password) {
   const existingUser = await User.findOne({ username }).collation({
     locale: "en",
     strength: 2,
@@ -17,6 +17,7 @@ async function register(username, password) {
 
   const user = await User.create({
     username,
+    email,
     hashedPassword,
   });
 
