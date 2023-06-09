@@ -9,4 +9,7 @@ module.exports = (app) => {
   app.use("/catalog", catalogController);
   app.use("/auth", authController);
   app.use("/game", gameController);
+  app.use(function (req, res) {
+    res.status(404).render("404");
+  });
 };
