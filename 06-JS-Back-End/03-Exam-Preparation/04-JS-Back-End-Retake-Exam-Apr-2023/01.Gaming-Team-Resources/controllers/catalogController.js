@@ -6,7 +6,7 @@ catalogController.get("/", async (req, res) => {
   res.render("catalog", {
     title: "Catalog Page - Gaming Team",
     user: req.user,
-    games: games,
+    games,
   });
 });
 

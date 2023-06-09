@@ -6,7 +6,7 @@ const { hasUser } = require("../middlewares/guards");
 
 module.exports = (app) => {
   app.use("/", homeController);
-  app.use("/catalog", hasUser(), catalogController);
+  app.use("/catalog", catalogController);
   app.use("/auth", authController);
-  app.use("/create", gameController);
+  app.use("/create", hasUser(), gameController);
 };
