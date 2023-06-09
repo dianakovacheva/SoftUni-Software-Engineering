@@ -8,7 +8,7 @@ async function createGameOffer(gameOffer) {
   return Game.create(gameOffer);
 }
 
-async function getById(id) {
+async function getGameById(id) {
   return Game.findById(id).lean();
 }
 
@@ -22,6 +22,6 @@ async function boughtByUser(gameId, userId) {
 module.exports = {
   getAll,
   createGameOffer,
-  getById,
+  getGameById,
   boughtByUser,
 };

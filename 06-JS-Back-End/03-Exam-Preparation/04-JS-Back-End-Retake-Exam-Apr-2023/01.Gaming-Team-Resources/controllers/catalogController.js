@@ -10,20 +10,4 @@ catalogController.get("/", async (req, res) => {
   });
 });
 
-catalogController.get("/details/:id", async (req, res) => {
-  const game = await getById(req.params.id);
-  game.isOwner = game.owner.toString() == req.user?._id.toString();
-
-  if (game.boughtBy && game.boughtBy.length > 0) {
-    game.hasBought = game.boughtBy
-      .map((x) => x.toString())
-      .includes(req.user._id.toString());
-  }
-  res.render("details", {
-    title: "Details Page",
-    user: req.user,
-    game,
-  });
-});
-
 module.exports = catalogController;

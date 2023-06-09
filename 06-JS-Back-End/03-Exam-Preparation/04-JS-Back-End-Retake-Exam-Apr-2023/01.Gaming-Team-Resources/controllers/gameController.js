@@ -1,7 +1,46 @@
-const { createGameOffer, getById } = require("../services/gameService");
+const {
+  createGameOffer,
+  getGameById,
+  boughtByUser,
+} = require("../services/gameService");
+
 const { parseError } = require("../util/parser");
 
 const gameController = require("express").Router();
+
+gameController.get("/details/:id/buy", async (req, res) => {
+  const game = await getGameById(req.params.id);
+
+  if (!game.boughtBy) {
+    game.boughtBy = [];
+  }
+
+  if (
+    game.owner.toString() != req.user._id.toString() &&
+    game.boughtBy.map((x) => x.toString()).includes(req.user._id.toString()) ==
+      false
+  ) {
+    await boughtByUser(req.params.id, req.user._id);
+  }
+
+  res.redirect(`/game/details/${req.params.id}`);
+});
+
+gameController.get("/details/:id", async (req, res) => {
+  const game = await getGameById(req.params.id);
+  game.isOwner = game.owner.toString() == req.user?._id.toString();
+
+  if (game.boughtBy && game.boughtBy.length > 0) {
+    game.hasBought = game.boughtBy
+      .map((x) => x.toString())
+      .includes(req.user._id.toString());
+  }
+  res.render("details", {
+    title: "Details Page",
+    user: req.user,
+    game,
+  });
+});
 
 gameController.get("/", (req, res) => {
   res.render("create", {
@@ -32,20 +71,6 @@ gameController.post("/", async (req, res) => {
       user: req.user,
     });
   }
-});
-
-gameController.get("/details/:id", async (req, res) => {
-  const game = await getById(req.params.id);
-
-  if (
-    game.owner.toString() != req.user._id.toString() &&
-    game.boughtBy.map((x) => x.toString()).includes(req.user._id.toString()) ==
-      false
-  ) {
-    await boughtByUser(req.params.id, req.user._id);
-  }
-
-  res.redirect(`./${req.params.id}`);
 });
 
 module.exports = gameController;
