@@ -19,9 +19,14 @@ async function boughtByUser(gameId, userId) {
   return game.save();
 }
 
+async function deleteGame(gameId) {
+  return Game.findByIdAndDelete(gameId);
+}
+
 module.exports = {
   getAll,
   createGameOffer,
   getGameById,
   boughtByUser,
+  deleteGame,
 };

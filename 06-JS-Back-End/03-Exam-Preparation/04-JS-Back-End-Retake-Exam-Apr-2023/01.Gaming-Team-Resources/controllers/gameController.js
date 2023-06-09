@@ -2,6 +2,7 @@ const {
   createGameOffer,
   getGameById,
   boughtByUser,
+  deleteGame,
 } = require("../services/gameService");
 
 const { parseError } = require("../util/parser");
@@ -69,6 +70,24 @@ gameController.post("/", async (req, res) => {
       errors: parseError(error),
       body: game,
       user: req.user,
+    });
+  }
+});
+
+gameController.get("/details/:id/delete", async (req, res) => {
+  const game = await getGameById(req.params.id);
+  try {
+    if (game.owner.toString() != req.user._id.toString()) {
+      return res.redirect("/auth/login");
+    }
+    await deleteGame(game._id);
+    res.redirect("/catalog");
+  } catch (error) {
+    res.render("details", {
+      title: "Details Page",
+      user: req.user,
+      game,
+      errors: parseError(error),
     });
   }
 });
