@@ -1,45 +1,45 @@
-{{#if errors}}
+{{#with game}}
+<main id="edit">
+  <!-- In case of error, you should display div with class "errorContainer" -->
+  <!-- You can choose to display the first error or all of them (error message/s in your opinion) -->
+
+  {{#if errors}}
   <div>
     <div class="errorContainer">
       {{#each errors}}
-        <p>{{this}}</p>
+      <p>{{this}}</p>
       {{/each}}
     </div>
   </div>
-{{/if}}
+  {{/if}}
 
-{{#with game}}
-<main id="edit">
-    <!-- In case of error, you should display div with class "errorContainer" -->
-    <!-- You can choose to display the first error or all of them (error message/s in your opinion) -->
-
-    <section id="edit-container">
-        <div class="edit-container-info">
-            <h1>{{title}}</h1>
-            <form method="POST">
-                <label>Platform:</label>
-                <select id="platform" name="platform">
-                    <option value="">-------</option>
-                    <option value="PC" {{#if (eq 'PC' ../game.platform)}}selected{{/if}}>PC</option>
-                    <option value="Nintendo" {{#if (eq 'Nintendo' ../game.platform)}}selected{{/if}}>Nintendo</option>
-                    <option value="PS4" {{#if (eq 'PS4' ../game.platform)}}selected{{/if}}>PS4</option>
-                    <option value="PS5" {{#if (eq 'PS5' ../game.platform)}}selected{{/if}}>PS5</option>
-                    <option value="XBOX" {{#if (eq 'XBOX' ../game.platform)}}selected{{/if}}>XBOX</option>
-                </select>
-                <label>Name:</label>
-                <input type="text" id="name" name="name" value="{{name}}">
-                <label>Image:</label>
-                <input type="text" id="image" name="imageUrl" value="{{imageUrl}}"
-                    placeholder="https://image.api.playstation.com/vulcan/ap/rnd/202208/0921/dR9KJAKDW2izPbptHQbh3rnj.png">
-                <label>Price:</label>
-                <input type="number" id="price" name="price" value="{{price}}">
-                <label>Genre:</label>
-                <input type="text" id="genre" name="genre" value="{{genre}}">
-                <label>Description:</label>
-                <textarea id="description" name="description">{{description}}</textarea>
-                <input type="submit" id="btn" value="EDIT"></input>
-            </form>
-        </div>
-    </section>
+  <section id="edit-container">
+    <div class="edit-container-info">
+      <h1>{{title}}</h1>
+      <form method="POST">
+        <label>Platform:</label>
+        <select id="platform" name="platform">
+          <option value="">-------</option>
+          <option value="PC" {{#if (eq 'PC' ../game.platform)}}selected{{/if}}>PC</option>
+          <option value="Nintendo" {{#if (eq 'Nintendo' ../game.platform)}}selected{{/if}}>Nintendo</option>
+          <option value="PS4" {{#if (eq 'PS4' ../game.platform)}}selected{{/if}}>PS4</option>
+          <option value="PS5" {{#if (eq 'PS5' ../game.platform)}}selected{{/if}}>PS5</option>
+          <option value="XBOX" {{#if (eq 'XBOX' ../game.platform)}}selected{{/if}}>XBOX</option>
+        </select>
+        <label>Name:</label>
+        <input type="text" id="name" name="name" value="{{name}}">
+        <label>Image:</label>
+        <input type="text" id="image" name="imageUrl" value="{{imageUrl}}"
+          placeholder="https://image.api.playstation.com/vulcan/ap/rnd/202208/0921/dR9KJAKDW2izPbptHQbh3rnj.png">
+        <label>Price:</label>
+        <input type="number" id="price" name="price" value="{{price}}">
+        <label>Genre:</label>
+        <input type="text" id="genre" name="genre" value="{{genre}}">
+        <label>Description:</label>
+        <textarea id="description" name="description">{{description}}</textarea>
+        <input type="submit" id="btn" value="EDIT"></input>
+      </form>
+    </div>
+  </section>
 </main>
 {{/with}}

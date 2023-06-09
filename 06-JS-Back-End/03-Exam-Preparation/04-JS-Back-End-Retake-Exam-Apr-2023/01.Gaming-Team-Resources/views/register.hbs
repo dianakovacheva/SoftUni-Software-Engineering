@@ -1,14 +1,15 @@
-{{#if errors}}
-  <div>
-    <div class="errorContainer">
-      {{#each errors}}
-        <p>{{this}}</p>
-      {{/each}}
-    </div>
-  </div>
-{{/if}}
-
 <main id="register">
+
+  {{#if errors}}
+    <div>
+      <div class="errorContainer">
+        {{#each errors}}
+          <p>{{this}}</p>
+        {{/each}}
+      </div>
+    </div>
+  {{/if}}
+
   <div class="register-box">
     <h1>Register</h1>
     <h4>It's free and only takes a minute</h4>
