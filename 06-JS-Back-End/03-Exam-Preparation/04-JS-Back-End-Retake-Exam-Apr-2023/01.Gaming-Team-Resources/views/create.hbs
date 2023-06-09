@@ -1,19 +1,21 @@
-<main id="create">
-    {{#if errors}}
-    <div>
-        <div class="errorContainer">
-            <p>{{this}}</p>
-        </div>
+{{#if errors}}
+  <div>
+    <div class="errorContainer">
+      {{#each errors}}
+        <p>{{this}}</p>
+      {{/each}}
     </div>
-    {{/if}}
+  </div>
+{{/if}}
 
+<main id="create">
     <section id="create-container">
         <div class="create-container-info">
             <h1>Create Game Code Offer</h1>
             <h4>Post your code to sell</h4>
-            <form action="/create" method="post">
+            <form method="POST">
                 <label>Platform:</label>
-                <select id="platform" name="platform" value="{{body.platform}}">
+                <select id="platform" name="platform">
                     <option value="">-------</option>
                     <option value="PC">PC</option>
                     <option value="Nintendo">Nintendo</option>
@@ -22,15 +24,15 @@
                     <option value="XBOX">XBOX</option>
                 </select>
                 <label>Name:</label>
-                <input type="text" id="name" name="name" value="{{body.name}}">
+                <input type="text" id="name" name="name" value="{{game.name}}">
                 <label>Image:</label>
-                <input type="text" id="image" name="imageUrl" value="{{body.imageUrl}}" placeholder="http://...">
+                <input type="text" id="image" name="imageUrl" value="{{game.imageUrl}}" placeholder="http://...">
                 <label>Price:</label>
-                <input type="number" id="price" name="price" value="{{body.price}}">
+                <input type="number" id="price" name="price" value="{{game.price}}">
                 <label>Genre:</label>
-                <input type="text" id="genre" name="genre" value="{{body.genre}}">
+                <input type="text" id="genre" name="genre" value="{{game.genre}}">
                 <label>Description:</label>
-                <textarea id="description" name="description" value="{{body.description}}"></textarea>
+                <textarea id="description" name="description" value="{{game.description}}"></textarea>
 
                 <input type="submit" id="btn" value="CREATE"></input>
             </form>

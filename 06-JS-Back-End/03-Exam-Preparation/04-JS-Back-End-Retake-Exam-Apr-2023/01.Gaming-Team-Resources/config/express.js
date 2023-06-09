@@ -7,6 +7,7 @@ const trimBody = require("../middlewares/trimBody");
 module.exports = (app) => {
   const hbs = handlebars.create({
     extname: ".hbs",
+    helpers: require("./handlebars-helpers"),
   });
 
   app.engine(".hbs", hbs.engine);

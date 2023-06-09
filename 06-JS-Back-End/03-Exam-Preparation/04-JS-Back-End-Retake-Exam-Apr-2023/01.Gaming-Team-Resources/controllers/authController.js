@@ -65,6 +65,7 @@ authController.post("/login", async (req, res) => {
       errors,
       body: {
         email: req.body.email,
+        username: req.body.username,
       },
     });
   }

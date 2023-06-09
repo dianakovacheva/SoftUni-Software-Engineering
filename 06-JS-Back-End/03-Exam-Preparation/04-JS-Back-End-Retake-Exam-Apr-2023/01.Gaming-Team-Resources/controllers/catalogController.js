@@ -1,5 +1,5 @@
 const catalogController = require("express").Router();
-const { getAll, getById } = require("../services/gameService");
+const { getAll } = require("../services/gameService");
 
 catalogController.get("/", async (req, res) => {
   const games = await getAll();

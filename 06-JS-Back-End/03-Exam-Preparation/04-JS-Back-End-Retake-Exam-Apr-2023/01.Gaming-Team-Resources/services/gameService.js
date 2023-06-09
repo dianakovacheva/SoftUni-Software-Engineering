@@ -23,10 +23,24 @@ async function deleteGame(gameId) {
   return Game.findByIdAndDelete(gameId);
 }
 
+async function editGame(gameId, gameData) {
+  const game = await Game.findById(gameId);
+
+  game.platform = gameData.platform;
+  game.name = gameData.name;
+  game.imageUrl = gameData.imageUrl;
+  game.price = gameData.price;
+  game.genre = gameData.genre;
+  game.description = gameData.description;
+
+  return game.save();
+}
+
 module.exports = {
   getAll,
   createGameOffer,
   getGameById,
   boughtByUser,
   deleteGame,
+  editGame,
 };
