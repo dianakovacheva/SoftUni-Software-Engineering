@@ -8,5 +8,5 @@ module.exports = (app) => {
   app.use("/", homeController);
   app.use("/catalog", catalogController);
   app.use("/auth", authController);
-  app.use("/create", hasUser(), gameController);
+  app.use("/game", hasUser(), gameController);
 };
