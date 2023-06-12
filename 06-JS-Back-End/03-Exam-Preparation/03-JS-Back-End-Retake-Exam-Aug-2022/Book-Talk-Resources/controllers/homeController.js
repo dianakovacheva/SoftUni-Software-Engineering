@@ -2,7 +2,7 @@ const homeController = require("express").Router();
 
 homeController.get("/", (req, res) => {
   res.render("home", {
-    title: "Home Page",
+    title: "Book Store",
     user: req.user,
   });
 });

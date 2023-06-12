@@ -41,7 +41,6 @@ authController.post("/register", async (req, res) => {
 });
 
 authController.get("/login", (req, res) => {
-  // TODO replace with actual view by assigment
   res.render("login", {
     title: "Login Page",
   });
