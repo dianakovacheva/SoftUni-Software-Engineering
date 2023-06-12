@@ -6,4 +6,10 @@ module.exports = (app) => {
   app.use("/", homeController);
   app.use("/catalog", catalogController);
   app.use("/auth", authController);
+  app.use("*", (req, res) => {
+    res.render("404", {
+      title: "404 Page",
+      user: req.user,
+    });
+  });
 };
