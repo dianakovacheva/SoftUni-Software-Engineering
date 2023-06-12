@@ -4,18 +4,24 @@ const User = require("../models/User");
 
 const JWT_SECRET = "qfsgdfjgjthkhkhjkj";
 
-async function register(username, password) {
-  const existingUser = await User.findOne({ username }).collation({
+async function register(email, username, password) {
+  const existingUser = await User.findOne({ email }).collation({
     locale: "en",
     strength: 2,
   });
+
   if (existingUser) {
-    throw new Error("Username is taken");
+    throw new Error("Email is taken");
+  }
+
+  if (password.length < 3) {
+    throw new Error("Password should be at least 3 characters long");
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const user = await User.create({
+    email,
     username,
     hashedPassword,
   });
