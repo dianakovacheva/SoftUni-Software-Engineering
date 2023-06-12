@@ -29,7 +29,6 @@ authController.post("/register", async (req, res) => {
       req.body.password
     );
 
-    // TODO check assignment to see if register creates a session
     res.cookie("token", token);
 
     res.redirect("/");
@@ -56,12 +55,9 @@ authController.post("/login", async (req, res) => {
   try {
     const token = await login(req.body.email, req.body.password);
     res.cookie("token", token);
-
-    // TODO replace with redirect by assignment
     res.redirect("/");
   } catch (error) {
     const errors = parseError(error);
-    // TODO add error desplay to actual template from assigment
     res.render("login", {
       title: "Login Page",
       errors,

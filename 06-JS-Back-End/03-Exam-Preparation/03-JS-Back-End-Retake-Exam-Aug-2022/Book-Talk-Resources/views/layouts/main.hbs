@@ -24,7 +24,7 @@
           <!--Only for logged user-->
           {{#if user}}
             <a href="/profile">Profile</a>
-            <a href="/createReview">Create Review</a>
+            <a href="/book/createReview">Create Review</a>
             <a href="/auth/logout">Logout</a>
           {{else}}
             <!--Only for guest-->
@@ -38,16 +38,16 @@
 
     <!-- In case of error, you should display div with class "errorContainer" -->
     <!-- You can choose to display the first error or all of them (error message/s in your opinion) -->
-    <div>
-      {{#if errors}}
+    {{#if errors}}
+      <div>
         <div class="errorContainer">
           {{#each errors}}
             <p>{{this}}</p>
           {{/each}}
         </div>
-      {{/if}}
-    </div>
-
+      </div>
+    {{/if}}
+  
     {{{body}}}
 
   </body>
