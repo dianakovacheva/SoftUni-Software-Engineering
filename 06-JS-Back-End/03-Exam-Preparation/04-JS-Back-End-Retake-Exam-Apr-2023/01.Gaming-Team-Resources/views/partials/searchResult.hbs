@@ -1,0 +1,17 @@
+<div class="search-result">
+  <div class="search-list">
+    <div class="game">
+      <div class="game-img">
+        <img src="{{game.imageUrl}}" />
+      </div>
+      <div class="game-info">
+        <h1>{{game.name}}</h1>
+        <p><span>Platform: </span>{{game.platform}}</p>
+        <p><span>Ganre: </span>{{game.ganre}}</p>
+        <p><span>Price: </span>${{game.price}}</p>
+      </div>
+
+      <a href="/game/details/{{game.id}}" class="btn-details">Details</a>
+    </div>
+  </div>
+</div>
