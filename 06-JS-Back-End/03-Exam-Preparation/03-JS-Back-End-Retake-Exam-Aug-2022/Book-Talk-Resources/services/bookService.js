@@ -19,9 +19,28 @@ async function bookWishedByUser(bookId, userId) {
   return book.save();
 }
 
+async function deleteBook(bookId) {
+  return await Book.findByIdAndDelete(bookId);
+}
+
+async function editBook(bookId, bookData) {
+  const book = await Book.findById(bookId);
+
+  book.title = bookData.title;
+  book.author = bookData.author;
+  book.imageUrl = bookData.imageUrl;
+  book.bookReview = bookData.bookReview;
+  book.genre = bookData.genre;
+  book.stars = bookData.stars;
+
+  return book.save();
+}
+
 module.exports = {
   getAllBooks,
   getBookById,
   createBookReview,
   bookWishedByUser,
+  deleteBook,
+  editBook,
 };

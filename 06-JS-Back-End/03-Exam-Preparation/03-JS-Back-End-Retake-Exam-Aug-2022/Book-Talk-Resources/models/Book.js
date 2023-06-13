@@ -35,8 +35,8 @@ const bookSchema = new Schema({
   stars: {
     type: Number,
     required: true,
-    min: 1,
-    max: 5,
+    min: [1, "Stars must be between 1 and 5"],
+    max: [5, "Stars must be between 1 and 5"],
   },
   wishingList: {
     type: [Types.ObjectId],
