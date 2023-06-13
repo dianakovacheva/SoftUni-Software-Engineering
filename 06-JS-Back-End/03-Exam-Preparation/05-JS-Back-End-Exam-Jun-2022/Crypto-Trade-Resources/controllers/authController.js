@@ -4,7 +4,6 @@ const { parseError } = require("../util/parser");
 const authController = require("express").Router();
 
 authController.get("/register", (req, res) => {
-  // TODO replace with actual view by assigment
   res.render("register", {
     title: "Register Page",
   });
@@ -12,15 +11,27 @@ authController.get("/register", (req, res) => {
 
 authController.post("/register", async (req, res) => {
   try {
-    if (req.body.username == "" || req.body.password == "") {
+    if (
+      req.body.username == "" ||
+      req.body.email == "" ||
+      req.body.password == ""
+    ) {
       throw new Error("All fields required");
+    }
+
+    if (req.body.password.length < 4) {
+      throw new Error("Password should be at least four characters long");
     }
 
     if (req.body.password != req.body.repass) {
       throw new Error("Passwords don't match");
     }
 
-    const token = await register(req.body.username, req.body.password);
+    const token = await register(
+      req.body.username,
+      req.body.email,
+      req.body.password
+    );
 
     // TODO check assignment to see if register creates a session
     res.cookie("token", token);
