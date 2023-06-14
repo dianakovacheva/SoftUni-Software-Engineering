@@ -24,10 +24,23 @@ async function deleteACrypto(cryptoId) {
   return await Crypto.findByIdAndDelete(cryptoId);
 }
 
+async function editACrypto(cryptoId, cryptoData) {
+  const existingCrypto = await Crypto.findById(cryptoId);
+
+  existingCrypto.name = cryptoData.name;
+  existingCrypto.imageUrl = cryptoData.imageUrl;
+  existingCrypto.price = cryptoData.price;
+  existingCrypto.cryptoDescription = cryptoData.cryptoDescription;
+  existingCrypto.paymentMethod = cryptoData.paymentMethod;
+
+  return existingCrypto.save();
+}
+
 module.exports = {
   createCryptoOffer,
   getAllCrypto,
   getCryptoById,
   buyACrypto,
   deleteACrypto,
+  editACrypto,
 };

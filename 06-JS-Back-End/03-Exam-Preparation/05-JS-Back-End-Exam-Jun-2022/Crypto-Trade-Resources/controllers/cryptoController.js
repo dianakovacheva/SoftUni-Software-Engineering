@@ -4,10 +4,41 @@ const {
   createCryptoOffer,
   buyACrypto,
   deleteACrypto,
+  editACrypto,
 } = require("../services/cryptoService");
 const { parseError } = require("../util/parser");
 
 const cryptoController = require("express").Router();
+
+cryptoController.get("/details/:id/edit", hasUser(), async (req, res) => {
+  const crypto = await getCryptoById(req.params.id);
+
+  res.render("edit", {
+    title: "Edit Page",
+    user: req.user,
+    crypto,
+  });
+});
+
+cryptoController.post("/details/:id/edit", hasUser(), async (req, res) => {
+  const crypto = await getCryptoById(req.params.id);
+
+  if (crypto.owner.toString() != req.user._id.toString()) {
+    return res.redirect("auth/login");
+  }
+
+  try {
+    await editACrypto(crypto._id, req.body);
+    res.redirect(`/crypto/details/${crypto._id}`);
+  } catch (error) {
+    res.render("edit", {
+      title: "Edit Page",
+      user: req.user,
+      errors: parseError(error),
+      crypto,
+    });
+  }
+});
 
 cryptoController.get("/details/:id/delete", hasUser(), async (req, res) => {
   const crypto = await getCryptoById(req.params.id);

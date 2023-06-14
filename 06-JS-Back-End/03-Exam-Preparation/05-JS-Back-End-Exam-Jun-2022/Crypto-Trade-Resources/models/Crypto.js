@@ -46,8 +46,6 @@ const cryptoSchema = new Schema({
   },
 });
 
-// Note:  When a user buys crypto, their id is added to that collection (Buy a crypto)
-
 const Crypto = model("Crypto", cryptoSchema);
 
 module.exports = Crypto;
