@@ -3,10 +3,22 @@ const {
   getCryptoById,
   createCryptoOffer,
   buyACrypto,
+  deleteACrypto,
 } = require("../services/cryptoService");
 const { parseError } = require("../util/parser");
 
 const cryptoController = require("express").Router();
+
+cryptoController.get("/details/:id/delete", hasUser(), async (req, res) => {
+  const crypto = await getCryptoById(req.params.id);
+
+  if (crypto.owner.toString() != req.user._id.toString()) {
+    return res.redirect("/auth/login");
+  }
+
+  await deleteACrypto(crypto._id);
+  res.redirect("/cryptoCatalog");
+});
 
 cryptoController.get("/details/:id/buy", hasUser(), async (req, res) => {
   const crypto = await getCryptoById(req.params.id);

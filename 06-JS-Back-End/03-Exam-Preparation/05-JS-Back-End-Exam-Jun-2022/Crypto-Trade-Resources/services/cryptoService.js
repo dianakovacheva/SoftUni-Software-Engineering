@@ -20,9 +20,14 @@ async function buyACrypto(cryptoId, buyerId) {
   return crypto.save();
 }
 
+async function deleteACrypto(cryptoId) {
+  return await Crypto.findByIdAndDelete(cryptoId);
+}
+
 module.exports = {
   createCryptoOffer,
   getAllCrypto,
   getCryptoById,
   buyACrypto,
+  deleteACrypto,
 };
