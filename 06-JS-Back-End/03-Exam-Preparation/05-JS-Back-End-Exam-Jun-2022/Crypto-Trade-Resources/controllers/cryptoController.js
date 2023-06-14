@@ -25,7 +25,7 @@ cryptoController.post("/createOffer", hasUser(), async (req, res) => {
     price: req.body.price,
     cryptoDescription: req.body.cryptoDescription,
     paymentMethod: req.body.paymentMethod,
-    owner: req.body.owner,
+    owner: req.user._id,
   };
 
   try {
