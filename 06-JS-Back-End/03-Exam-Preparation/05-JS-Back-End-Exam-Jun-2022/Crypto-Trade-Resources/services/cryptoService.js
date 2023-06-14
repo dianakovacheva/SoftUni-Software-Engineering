@@ -36,6 +36,20 @@ async function editACrypto(cryptoId, cryptoData) {
   return existingCrypto.save();
 }
 
+async function search(name, paymentMethod) {
+  let crypto = await getAllCrypto();
+
+  if (name) {
+    crypto = crypto.filter((x) => x.name.toLowerCase() == name.toLowerCase());
+  }
+
+  if (paymentMethod) {
+    crypto = crypto.filter((x) => x.paymentMethod == paymentMethod);
+  }
+
+  return crypto;
+}
+
 module.exports = {
   createCryptoOffer,
   getAllCrypto,
@@ -43,4 +57,5 @@ module.exports = {
   buyACrypto,
   deleteACrypto,
   editACrypto,
+  search,
 };
