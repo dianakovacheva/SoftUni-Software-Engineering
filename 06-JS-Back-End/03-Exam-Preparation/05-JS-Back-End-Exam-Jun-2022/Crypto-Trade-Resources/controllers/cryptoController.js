@@ -2,13 +2,46 @@ const { hasUser } = require("../middlewares/guards");
 const {
   getCryptoById,
   createCryptoOffer,
+  buyACrypto,
 } = require("../services/cryptoService");
 const { parseError } = require("../util/parser");
 
 const cryptoController = require("express").Router();
 
+cryptoController.get("/details/:id/buy", hasUser(), async (req, res) => {
+  const crypto = await getCryptoById(req.params.id);
+
+  if (!crypto.buyACrypto) {
+    crypto.buyACrypto = [];
+  }
+
+  if (
+    crypto.owner.toString() != req.user._id.toString() &&
+    crypto.buyACrypto
+      .map((x) => x.toString())
+      .includes(req.user._id.toString()) == false
+  ) {
+    await buyACrypto(crypto._id, req.user._id);
+  }
+  res.redirect(`/crypto/details/${crypto._id}`);
+});
+
 cryptoController.get("/details/:id", async (req, res) => {
   const crypto = await getCryptoById(req.params.id);
+
+  crypto.isOwner = crypto.owner.toString() == req.user?._id.toString();
+
+  if (crypto.buyACrypto && crypto.buyACrypto.length > 0) {
+    crypto.hasBought = crypto.buyACrypto
+      .map((userId) => userId.toString())
+      .includes(req.user?._id.toString());
+  }
+
+  res.render("details", {
+    title: "Details Page",
+    user: req.user,
+    crypto,
+  });
 });
 
 cryptoController.get("/createOffer", hasUser(), (req, res) => {
