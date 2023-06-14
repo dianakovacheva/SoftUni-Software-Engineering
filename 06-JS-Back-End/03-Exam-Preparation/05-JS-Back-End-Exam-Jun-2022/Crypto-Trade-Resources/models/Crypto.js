@@ -7,7 +7,7 @@ const cryptoSchema = new Schema({
   name: {
     type: String,
     required: true,
-    minlength: [2, "The Name should be at least two characters long"],
+    minlength: [2, "The Name should be at least 2 characters long"],
   },
   imageUrl: {
     type: String,

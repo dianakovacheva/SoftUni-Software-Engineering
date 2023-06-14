@@ -20,7 +20,7 @@ authController.post("/register", async (req, res) => {
     }
 
     if (req.body.password.length < 4) {
-      throw new Error("Password should be at least four characters long");
+      throw new Error("Password should be at least 4 characters long");
     }
 
     if (req.body.password != req.body.repass) {
