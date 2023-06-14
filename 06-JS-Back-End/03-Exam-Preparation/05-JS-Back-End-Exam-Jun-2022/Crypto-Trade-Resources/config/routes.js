@@ -8,4 +8,7 @@ module.exports = (app) => {
   app.use("/auth", authController);
   app.use("/cryptoCatalog", catalogController);
   app.use("/crypto", cryptoController);
+  app.use("*", (req, res) => {
+    res.render("404");
+  });
 };
