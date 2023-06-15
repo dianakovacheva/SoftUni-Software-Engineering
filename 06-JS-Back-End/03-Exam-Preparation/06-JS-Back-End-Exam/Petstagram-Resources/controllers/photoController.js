@@ -1,13 +1,18 @@
 const { hasUser } = require("../middlewares/guards");
-const { addPhotoPost } = require("../services/photoService");
+const { addPhotoPost, getPhotoPostById } = require("../services/photoService");
 const { parseError } = require("../util/parser");
 
 const photoPostController = require("express").Router();
 
-photoPostController.get("/details/:id", (req, res) => {
+photoPostController.get("/details/:id", async (req, res) => {
+  const photoPost = await getPhotoPostById(req.params.id);
+
+  photoPost.isOwner = photoPost.owner._id.toString() == req.user._id.toString();
+
   res.render("details", {
     title: "Details Page",
     user: req.user,
+    photoPost,
   });
 });
 

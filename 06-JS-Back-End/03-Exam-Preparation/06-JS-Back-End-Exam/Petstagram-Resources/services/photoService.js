@@ -8,7 +8,12 @@ async function getAllPhotoPost() {
   return await Photo.find({}).populate("owner").lean();
 }
 
+async function getPhotoPostById(photoPostId) {
+  return await Photo.findById(photoPostId).populate("owner").lean();
+}
+
 module.exports = {
   addPhotoPost,
   getAllPhotoPost,
+  getPhotoPostById,
 };
