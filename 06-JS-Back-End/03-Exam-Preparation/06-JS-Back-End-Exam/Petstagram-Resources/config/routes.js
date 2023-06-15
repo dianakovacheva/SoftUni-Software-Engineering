@@ -9,7 +9,7 @@ module.exports = (app) => {
   app.use("/auth", authController);
   app.use("/catalog", catalogController);
   app.use("/photo", photoPostController);
-  app.use("/user", userController);
+  app.use("/profile", userController);
   app.use(function (req, res) {
     res.status(404).render("404", {
       user: req.user,

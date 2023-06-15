@@ -41,6 +41,11 @@ async function addComment(photoPostId, commentData) {
   return photoPost.save();
 }
 
+async function uploadedPhotosByOwnerId(userId) {
+  const uploadedPhotos = await Photo.find({ owner: userId }).lean();
+  return uploadedPhotos;
+}
+
 module.exports = {
   addPhotoPost,
   getAllPhotoPost,
@@ -48,4 +53,5 @@ module.exports = {
   editPhotoPost,
   deletePhotoPost,
   addComment,
+  uploadedPhotosByOwnerId,
 };
