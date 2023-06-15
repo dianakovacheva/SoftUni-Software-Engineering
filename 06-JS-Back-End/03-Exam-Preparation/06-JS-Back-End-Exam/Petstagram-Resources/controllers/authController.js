@@ -11,7 +11,6 @@ authController.get("/register", (req, res) => {
 
 authController.post("/register", async (req, res) => {
   try {
-    console.log(req.body);
     if (
       req.body.username == "" ||
       req.body.email == "" ||
@@ -38,8 +37,6 @@ authController.post("/register", async (req, res) => {
 
     res.redirect("/");
   } catch (error) {
-    console.log("here");
-    console.log(error);
     const errors = parseError(error);
     res.render("register", {
       title: "Register Page",
