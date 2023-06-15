@@ -1,8 +1,38 @@
 const { hasUser } = require("../middlewares/guards");
-const { addPhotoPost, getPhotoPostById } = require("../services/photoService");
+const {
+  addPhotoPost,
+  getPhotoPostById,
+  editPhotoPost,
+} = require("../services/photoService");
 const { parseError } = require("../util/parser");
 
 const photoPostController = require("express").Router();
+
+photoPostController.post("/details/:id/edit", hasUser(), async (req, res) => {
+  const photoPost = await getPhotoPostById(req.params.id);
+
+  try {
+    await editPhotoPost(req.params.id, req.body);
+    res.redirect(`/photo/details/${photoPost._id}`);
+  } catch (error) {
+    res.render("edit", {
+      title: "Edit Page",
+      errors: parseError(error),
+      user: req.user,
+      photoPost,
+    });
+  }
+});
+
+photoPostController.get("/details/:id/edit", hasUser(), async (req, res) => {
+  const photoPost = await getPhotoPostById(req.params.id);
+
+  res.render("edit", {
+    title: "Edit Page",
+    user: req.user,
+    photoPost,
+  });
+});
 
 photoPostController.get("/details/:id", async (req, res) => {
   const photoPost = await getPhotoPostById(req.params.id);
