@@ -24,9 +24,14 @@ async function editPhotoPost(photoPostId, photoPostData) {
   return existingPhotoPost.save();
 }
 
+async function deletePhotoPost(photoPostId) {
+  return await Photo.findByIdAndDelete(photoPostId);
+}
+
 module.exports = {
   addPhotoPost,
   getAllPhotoPost,
   getPhotoPostById,
   editPhotoPost,
+  deletePhotoPost,
 };

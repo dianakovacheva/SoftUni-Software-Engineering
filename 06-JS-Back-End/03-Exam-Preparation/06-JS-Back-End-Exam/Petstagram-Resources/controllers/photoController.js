@@ -3,10 +3,27 @@ const {
   addPhotoPost,
   getPhotoPostById,
   editPhotoPost,
+  deletePhotoPost,
 } = require("../services/photoService");
 const { parseError } = require("../util/parser");
 
 const photoPostController = require("express").Router();
+
+photoPostController.get("/details/:id/delete", hasUser(), async (req, res) => {
+  const photoPost = await getPhotoPostById(req.params.id);
+
+  try {
+    await deletePhotoPost(photoPost);
+    res.redirect("/catalog");
+  } catch (error) {
+    res.render("details", {
+      title: "Details Page",
+      user: req.user,
+      errors: parseError(error),
+      photoPost,
+    });
+  }
+});
 
 photoPostController.post("/details/:id/edit", hasUser(), async (req, res) => {
   const photoPost = await getPhotoPostById(req.params.id);
