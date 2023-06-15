@@ -9,8 +9,13 @@ async function register(username, password) {
     locale: "en",
     strength: 2,
   });
+
   if (existingUser) {
     throw new Error("Username is taken");
+  }
+
+  if (password.length < 4) {
+    throw new Error("The password should be at least 4 characters long");
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
