@@ -79,6 +79,7 @@
         </div>
 
         {{#if user}}
+        {{#unless photoPost.isOwner}}
         <div class="addComments">
           <!-- Start Add Comments Form -->
           <form method="post" action="">
@@ -87,6 +88,7 @@
             <button type="submit">Post</button>
           </form>
         </div>
+        {{/unless}}
         {{/if}}
       </div>
     </div>

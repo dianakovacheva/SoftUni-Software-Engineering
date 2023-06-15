@@ -7,7 +7,8 @@ const photoPostController = require("express").Router();
 photoPostController.get("/details/:id", async (req, res) => {
   const photoPost = await getPhotoPostById(req.params.id);
 
-  photoPost.isOwner = photoPost.owner._id.toString() == req.user._id.toString();
+  photoPost.isOwner =
+    photoPost.owner._id.toString() == req.user?._id.toString();
 
   res.render("details", {
     title: "Details Page",
