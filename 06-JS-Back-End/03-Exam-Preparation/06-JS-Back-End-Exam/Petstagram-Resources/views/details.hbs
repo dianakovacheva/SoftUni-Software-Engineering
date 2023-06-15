@@ -70,11 +70,17 @@
             <p class="petAge">Age: {{photoPost.age}}</p>
           </div>
 
-          {{#if comments}}
-          {{#each comments}}
-          {{> commentCard}}
-          {{/each}}
-          {{/if}}
+          <div class="comments">
+            <div class="comments-top">
+
+              {{#if photoPost.commentList}}
+              {{#each photoPost.commentList}}
+              {{> commentCard}}
+              {{/each}}
+              {{/if}}
+
+            </div>
+          </div>
 
         </div>
 
@@ -82,8 +88,8 @@
         {{#unless photoPost.isOwner}}
         <div class="addComments">
           <!-- Start Add Comments Form -->
-          <form method="post" action="">
-            <textarea id="comment-textarea" name="" cols="40" rows="10" placeholder="Add comment..."></textarea>
+          <form method="post" action="/photo/{{photoPost._id}}/comments">
+            <textarea id="comment-textarea" name="comment" cols="40" rows="10" placeholder="Add comment..."></textarea>
             <!-- Post Comments Button -->
             <button type="submit">Post</button>
           </form>
