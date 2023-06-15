@@ -4,28 +4,33 @@ const User = require("../models/User");
 
 const JWT_SECRET = "qfsgdfjgjthkhkhjkj";
 
-async function register(username, password) {
-  const existingUser = await User.findOne({ username }).collation({
+async function register(username, email, password) {
+  const existingUserName = await User.findOne({ username }).collation({
     locale: "en",
     strength: 2,
   });
 
-  if (existingUser) {
+  const existingEmail = await User.findOne({ email }).collation({
+    locale: "en",
+    strength: 2,
+  });
+
+  if (existingUserName) {
     throw new Error("Username is taken");
   }
 
-  if (password.length < 4) {
-    throw new Error("The password should be at least 4 characters long");
+  if (existingEmail) {
+    throw new Error("Email is taken");
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const user = await User.create({
     username,
+    email,
     hashedPassword,
   });
 
-  // TODO see assigment if registration creates user session
   return createSession(user);
 }
 
@@ -48,10 +53,11 @@ async function login(username, password) {
   return createSession(user);
 }
 
-function createSession({ _id, username }) {
+function createSession({ _id, username, email }) {
   const payload = {
     _id,
     username,
+    email,
   };
 
   return jwt.sign(payload, JWT_SECRET);

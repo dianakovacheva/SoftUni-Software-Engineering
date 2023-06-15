@@ -54,10 +54,16 @@ const photoSchema = new Schema({
   },
 });
 
+photoSchema.index(
+  { username: 1 },
+  {
+    collation: {
+      locale: "en",
+      strength: 2,
+    },
+  }
+);
+
 const Photo = model("Photo", photoSchema);
 
 module.exports = Photo;
-
-// • commentList – an array of objects containing the user's ID and the comment content: [ { userID: '1234', comment: 'Nice photo!'} ]
-// • owner – object ID (a reference to the User model)
-// Note: When a user comments a photo, their ID is added to that collection (commentList)
