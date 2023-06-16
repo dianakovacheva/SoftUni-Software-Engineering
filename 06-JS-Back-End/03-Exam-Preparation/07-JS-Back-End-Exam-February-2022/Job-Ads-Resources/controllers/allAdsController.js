@@ -1,9 +1,8 @@
-const { hasUser } = require("../middlewares/guards");
 const { getAllAds } = require("../services/adService");
 
-const adsController = require("express").Router();
+const allAdsController = require("express").Router();
 
-adsController.get("/", async (req, res) => {
+allAdsController.get("/", async (req, res) => {
   const ads = await getAllAds();
 
   res.render("allAds", {
@@ -13,4 +12,4 @@ adsController.get("/", async (req, res) => {
   });
 });
 
-module.exports = adsController;
+module.exports = allAdsController;

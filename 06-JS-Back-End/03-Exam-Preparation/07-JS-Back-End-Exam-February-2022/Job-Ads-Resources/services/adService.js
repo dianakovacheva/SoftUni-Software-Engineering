@@ -4,6 +4,17 @@ async function getAllAds() {
   return await Ad.find({}).lean();
 }
 
+async function createAd(adData, author) {
+  return await Ad.create({
+    headline: adData.headline,
+    location: adData.location,
+    companyName: adData.companyName,
+    companyDescription: adData.companyDescription,
+    author: author._id,
+  });
+}
+
 module.exports = {
   getAllAds,
+  createAd,
 };
