@@ -22,7 +22,7 @@ const userSchema = new Schema({
     ],
   },
   myAds: {
-    type: [{ type: Types.ObjectId, ref: "Ad" }],
+    type: [{ type: Types.ObjectId, ref: "Ad", default: [] }],
   },
 });
 
