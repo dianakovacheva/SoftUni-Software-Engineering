@@ -18,8 +18,18 @@ async function getAdById(adId) {
   return await Ad.findById(adId).lean();
 }
 
+async function updateAd(adId, adData) {
+  return await Ad.findByIdAndUpdate(adId, adData);
+}
+
+async function deleteAd(adId) {
+  return await Ad.findByIdAndDelete(adId);
+}
+
 module.exports = {
   getAllAds,
   createAd,
   getAdById,
+  updateAd,
+  deleteAd,
 };
