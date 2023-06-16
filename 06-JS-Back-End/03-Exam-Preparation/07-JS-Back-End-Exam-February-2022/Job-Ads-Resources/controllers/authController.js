@@ -1,3 +1,4 @@
+const { hasUser } = require("../middlewares/guards");
 const { register, login } = require("../services/userService");
 const { parseError } = require("../util/parser");
 
@@ -71,7 +72,7 @@ authController.post("/login", async (req, res) => {
   }
 });
 
-authController.get("/logout", (req, res) => {
+authController.get("/logout", hasUser(), (req, res) => {
   res.clearCookie("token");
   res.redirect("/");
 });
