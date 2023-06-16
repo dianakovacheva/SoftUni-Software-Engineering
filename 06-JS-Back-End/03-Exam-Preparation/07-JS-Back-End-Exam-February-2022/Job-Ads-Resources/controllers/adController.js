@@ -1,5 +1,5 @@
 const { hasUser } = require("../middlewares/guards");
-const { createAd } = require("../services/adService");
+const { createAd, getAdById } = require("../services/adService");
 const { parseError } = require("../util/parser");
 
 const adController = require("express").Router();
@@ -21,9 +21,23 @@ adController.post("/create", hasUser(), async (req, res) => {
       errors: parseError(error),
       title: "Create Ad Page",
       user: req.user,
-      body: req.body,
+      ad: req.body,
     });
   }
+});
+
+adController.get("/details/:id", async (req, res) => {
+  const ad = await getAdById(req.params.id);
+
+  ad.isAuthor = ad.author.toString() == req.user?._id.toString();
+
+  ad.hasApplied;
+
+  res.render("details", {
+    title: "Details Page",
+    user: req.user,
+    ad,
+  });
 });
 
 module.exports = adController;

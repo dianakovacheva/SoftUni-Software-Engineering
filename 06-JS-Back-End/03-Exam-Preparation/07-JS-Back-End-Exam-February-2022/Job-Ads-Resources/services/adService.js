@@ -14,7 +14,12 @@ async function createAd(adData, author) {
   });
 }
 
+async function getAdById(adId) {
+  return await Ad.findById(adId).lean();
+}
+
 module.exports = {
   getAllAds,
   createAd,
+  getAdById,
 };

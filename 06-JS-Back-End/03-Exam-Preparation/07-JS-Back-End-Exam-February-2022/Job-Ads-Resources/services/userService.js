@@ -17,9 +17,9 @@ async function register(email, password, skillsDescription) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const user = await User.create({
-    email,
-    hashedPassword,
-    skillsDescription,
+    email: email,
+    hashedPassword: hashedPassword,
+    skillsDescription: skillsDescription,
   });
 
   return createSession(user);
