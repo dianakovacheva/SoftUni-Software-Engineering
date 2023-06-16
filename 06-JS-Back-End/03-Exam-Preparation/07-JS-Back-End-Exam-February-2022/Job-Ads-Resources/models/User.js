@@ -1,18 +1,33 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, Types } = require("mongoose");
 
-// TODO add User properties and validation according to assigment
+const EMAIL_PATTERN = /^[a-z]+@{1}[a-z]+\.{1}[a-z]{2,3}$/i;
+
 const userSchema = new Schema({
-  username: {
+  email: {
     type: String,
     required: true,
     unique: true,
-    minlength: [3, "Username must be at least 3 characters long"],
+    validate: {
+      validator: (value) => EMAIL_PATTERN.test(value),
+      message: "Invalid email",
+    },
   },
   hashedPassword: { type: String, required: true },
+  skillsDescription: {
+    type: String,
+    required: true,
+    minlength: [
+      40,
+      "The description of skills should be a maximum of 40 characters long",
+    ],
+  },
+  myAds: {
+    type: [{ type: Types.ObjectId, ref: "Ad" }],
+  },
 });
 
 userSchema.index(
-  { username: 1 },
+  { email: 1 },
   {
     collation: {
       locale: "en",
