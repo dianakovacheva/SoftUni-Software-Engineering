@@ -16,7 +16,7 @@ const userSchema = new Schema({
   skillsDescription: {
     type: String,
     required: true,
-    minlength: [
+    maxlength: [
       40,
       "The description of skills should be a maximum of 40 characters long",
     ],
