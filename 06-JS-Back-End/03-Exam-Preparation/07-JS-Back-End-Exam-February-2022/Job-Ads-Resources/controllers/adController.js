@@ -4,6 +4,7 @@ const {
   getAdById,
   updateAd,
   deleteAd,
+  applyForAd,
 } = require("../services/adService");
 const { parseError } = require("../util/parser");
 
@@ -17,26 +18,35 @@ adController.get("/create", hasUser(), (req, res) => {
 });
 
 adController.post("/create", hasUser(), async (req, res) => {
-  try {
-    await createAd(req.body, req.user);
+  const ad = {
+    headline: req.body.headline,
+    location: req.body.location,
+    companyName: req.body.companyName,
+    companyDescription: req.body.companyDescription,
+    author: req.user._id,
+  };
 
+  try {
+    await createAd(ad);
     res.redirect("/allAds");
   } catch (error) {
     res.render("create", {
       errors: parseError(error),
       title: "Create Ad Page",
       user: req.user,
-      ad: req.body,
+      ad,
     });
   }
 });
 
 adController.get("/details/:id", async (req, res) => {
   const ad = await getAdById(req.params.id);
+  console.log(ad);
+  ad.isAuthor = ad.author._id.toString() == req.user?._id.toString();
 
-  ad.isAuthor = ad.author.toString() == req.user?._id.toString();
-
-  ad.hasApplied;
+  ad.hasApplied = ad.appliedUsers.find(
+    (candidate) => candidate._id.toString() == req.user?._id.toString()
+  );
 
   res.render("details", {
     title: "Details Page",
@@ -79,6 +89,20 @@ adController.get("/details/:id/delete", hasUser(), async (req, res) => {
     res.render(`/ad/details/${req.params.id}`, {
       title: "Details Page",
       user: req.user,
+      errors: parseError(error),
+    });
+  }
+});
+
+adController.get("/details/:id/apply", hasUser(), async (req, res) => {
+  try {
+    await applyForAd(req.params.id, req.user._id);
+    res.redirect(`/ad/details/${req.params.id}`);
+  } catch (error) {
+    res.render(`/ad/details/${req.params.id}`, {
+      title: "Details Page",
+      user: req.user,
+      errors: parseError(error),
     });
   }
 });

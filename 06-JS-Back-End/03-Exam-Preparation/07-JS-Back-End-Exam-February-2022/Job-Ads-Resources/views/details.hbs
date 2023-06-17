@@ -12,7 +12,8 @@
             </article>
 
             <article class="details-page-card-content">
-                <p>Author: {{user.email}}</p>
+                
+                <p>Author: {{ad.author.email}}</p>
                 <h2>Headline: {{ad.headline}}</h2>
                 <h3>Company name: {{ad.companyName}}</h3>
                 <h4>Company description: {{ad.companyDescription}}</h4>
@@ -28,7 +29,7 @@
                     {{#unless ad.hasApplied}}
                     <!--logged in user who did not apply for current ad-->
                     <a href="/ad/details/{{ad._id}}/apply" class="btn-apply">Apply now!</a>
-                            <p class="applied-people">Hurry up, {{ad.candidatesCount}} people have already applied.</p>
+                    <p class="applied-people">Hurry up, {{ad.appliedUsers.length}} people have already applied.</p>
                     {{else}}
                     <!--logged in user who has already applied for current ad-->
                     <p class="already-applied">You have already applied!</p>
@@ -42,21 +43,21 @@
 
         </article>
     </section>
+
     {{#if ad.isAuthor}}
     <!--This section should only be visible to the author of the current ad-->
 
     <section id="info-about-candidates">
         <h2>Candidates for this ad:</h2>
         <!\--If there are people who have applied, show each of them in the following format--\>
+        {{#if ad.appliedUsers}}
+        {{#each ad.appliedUsers}}
             <article class="info-about-candidates-card">
-                <h2>Email: petar@abv.bg</h2>
-                <h3>Description of the candidate's skills: Experience with HTML 5, CSS 3, Node.js</h3>
+                <h2>Email: {{email}}</h2>
+                <h3>Description of the candidate's skills: {{skillsDescription}}</h3>
             </article>
-
-            <article class="info-about-candidates-card">
-                <h2>Email: ivan@abv.bg</h2>
-                <h3>Description of the candidate's skills: Experience with Node.js</h3>
-            </article>
+            {{/each}}
+            {{/if}}
             <!\--If not, you don't need to visualize anything further-\->
     </section>
     {{/if}}
