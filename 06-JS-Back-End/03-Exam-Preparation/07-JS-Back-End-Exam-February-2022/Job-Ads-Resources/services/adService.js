@@ -2,7 +2,7 @@ const Ad = require("../models/Ad");
 const { deleteFromMyAds } = require("./userService");
 
 async function getAllAds() {
-  return await Ad.find({}).lean();
+  return await Ad.find({}).populate("author", "email").lean();
 }
 
 async function createAd(ad) {
@@ -21,7 +21,7 @@ async function updateAd(adId, adData) {
 }
 
 async function deleteAd(adId, autorId) {
-  deleteFromMyAds(autorId, adId);
+  await deleteFromMyAds(autorId, adId);
   return await Ad.findByIdAndDelete(adId);
 }
 
@@ -39,6 +39,16 @@ async function getFirstNAds(n) {
   return Ad.find({}).limit(n).lean();
 }
 
+async function findMyAds(email) {
+  let ads = await getAllAds();
+
+  if (email) {
+    ads = ads.filter((ad) => ad.author.email == Object.values(email));
+  }
+
+  return ads;
+}
+
 module.exports = {
   getAllAds,
   createAd,
@@ -47,4 +57,5 @@ module.exports = {
   deleteAd,
   applyForAd,
   getFirstNAds,
+  findMyAds,
 };
