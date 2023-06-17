@@ -41,9 +41,10 @@ async function getFirstNAds(n) {
 
 async function findMyAds(email) {
   let ads = await getAllAds();
-
   if (email) {
-    ads = ads.filter((ad) => ad.author.email == Object.values(email));
+    ads = ads.filter(
+      (ad) => ad.author.email.toLowerCase() == email.toLowerCase()
+    );
   }
 
   return ads;
