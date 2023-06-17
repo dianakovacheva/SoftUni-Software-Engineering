@@ -6,6 +6,7 @@ const {
   deleteAd,
   applyForAd,
 } = require("../services/adService");
+const { addToMyAds } = require("../services/userService");
 const { parseError } = require("../util/parser");
 
 const adController = require("express").Router();
@@ -27,7 +28,9 @@ adController.post("/create", hasUser(), async (req, res) => {
   };
 
   try {
-    await createAd(ad);
+    const createdAd = await createAd(ad);
+    await addToMyAds(createdAd, req.user._id);
+
     res.redirect("/allAds");
   } catch (error) {
     res.render("create", {
@@ -41,7 +44,6 @@ adController.post("/create", hasUser(), async (req, res) => {
 
 adController.get("/details/:id", async (req, res) => {
   const ad = await getAdById(req.params.id);
-  console.log(ad);
   ad.isAuthor = ad.author._id.toString() == req.user?._id.toString();
 
   ad.hasApplied = ad.appliedUsers.find(
@@ -83,7 +85,7 @@ adController.post("/details/:id/edit", hasUser(), async (req, res) => {
 
 adController.get("/details/:id/delete", hasUser(), async (req, res) => {
   try {
-    await deleteAd(req.params.id);
+    await deleteAd(req.params.id, req.user._id);
     res.redirect("/allAds");
   } catch (error) {
     res.render(`/ad/details/${req.params.id}`, {

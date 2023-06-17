@@ -57,8 +57,31 @@ function verifyToken(token) {
   return jwt.verify(token, JWT_SECRET);
 }
 
+async function findUserById(userId) {
+  return User.findById(userId).lean();
+}
+
+async function addToMyAds(ad, authorId) {
+  const author = await User.findById(authorId);
+
+  author.myAds.push(ad);
+  return author.save();
+}
+
+async function deleteFromMyAds(authorId, adId) {
+  const author = await User.findById(authorId);
+  const indexOfAd = author.myAds.indexOf(adId);
+  if (indexOfAd > -1) {
+    author.myAds.splice(indexOfAd, 1);
+  }
+  return author.save();
+}
+
 module.exports = {
   register,
   login,
   verifyToken,
+  findUserById,
+  addToMyAds,
+  deleteFromMyAds,
 };

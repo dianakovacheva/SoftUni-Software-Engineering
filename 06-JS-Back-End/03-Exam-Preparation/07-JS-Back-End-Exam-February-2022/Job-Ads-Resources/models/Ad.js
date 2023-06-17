@@ -1,4 +1,5 @@
 const { Schema, model, Types } = require("mongoose");
+const { deleteFromMyAds } = require("../services/userService");
 
 const adSchema = new Schema({
   headline: {
@@ -40,6 +41,10 @@ adSchema.index(
     },
   }
 );
+
+adSchema.pre("deleteOne", { document: true, query: false }, async function () {
+  //
+});
 
 const Ad = model("Ad", adSchema);
 

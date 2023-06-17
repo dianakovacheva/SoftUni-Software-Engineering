@@ -1,4 +1,5 @@
 const Ad = require("../models/Ad");
+const { deleteFromMyAds } = require("./userService");
 
 async function getAllAds() {
   return await Ad.find({}).lean();
@@ -19,7 +20,8 @@ async function updateAd(adId, adData) {
   return await Ad.findByIdAndUpdate(adId, adData);
 }
 
-async function deleteAd(adId) {
+async function deleteAd(adId, autorId) {
+  deleteFromMyAds(autorId, adId);
   return await Ad.findByIdAndDelete(adId);
 }
 
