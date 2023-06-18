@@ -4,23 +4,25 @@ const User = require("../models/User");
 
 const JWT_SECRET = "qfsgdfjgjthkhkhjkj";
 
-async function register(username, password) {
-  const existingUser = await User.findOne({ username }).collation({
+async function register(email, firstName, lastName, password) {
+  const existingEmail = await User.findOne({ email }).collation({
     locale: "en",
     strength: 2,
   });
-  if (existingUser) {
-    throw new Error("Username is taken");
+
+  if (existingEmail) {
+    throw new Error("Email is taken");
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const user = await User.create({
-    username,
+    email,
+    firstName,
+    lastName,
     hashedPassword,
   });
 
-  // TODO see assigment if registration creates user session
   return createSession(user);
 }
 
