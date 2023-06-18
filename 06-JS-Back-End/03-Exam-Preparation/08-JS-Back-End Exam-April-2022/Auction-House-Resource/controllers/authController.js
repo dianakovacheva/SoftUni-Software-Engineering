@@ -16,6 +16,10 @@ authController.post("/register", async (req, res) => {
       throw new Error("All fields required");
     }
 
+    if (req.body.password < 5) {
+      throw new Error("The password should be at least 5 characters long");
+    }
+
     if (req.body.password != req.body.repass) {
       throw new Error("Passwords don't match");
     }
