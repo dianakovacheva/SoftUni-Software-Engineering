@@ -1,7 +1,6 @@
 {
   "name": "10_exam_scaffolder",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js"
@@ -18,5 +17,6 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.1",
     "nodemon": "^2.0.22"
-  }
+  },
+  "description": ""
 }
