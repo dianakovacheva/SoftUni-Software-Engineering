@@ -1,8 +1,11 @@
+const { hasUser } = require("../middlewares/guards");
+
 const auctionController = require("express").Router();
 
-auctionController.get("/browse", (req, res) => {
-  res.render("browse", {
-    title: "Browse Page",
+auctionController.get("/publish", hasUser(), async (req, res) => {
+  res.render("create", {
+    title: "Publish Auction",
+    user: req.user,
   });
 });
 
