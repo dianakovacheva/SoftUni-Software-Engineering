@@ -40,7 +40,7 @@ const auctionSchema = new Schema({
   },
 });
 
-userSchema.index(
+auctionSchema.index(
   { title: 1 },
   {
     collation: {
