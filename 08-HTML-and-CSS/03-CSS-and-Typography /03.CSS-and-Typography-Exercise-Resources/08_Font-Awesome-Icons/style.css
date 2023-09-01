@@ -21,6 +21,7 @@ a {
   color: #c83025;
 }
 
+i,
 svg {
   width: 1.14em;
   padding-right: 0.28em;
@@ -47,6 +48,6 @@ button.delete {
   background-color: #cc4036;
 }
 
-button svg {
+button i {
   fill: #ffffff;
 }
